@@ -19,3 +19,9 @@ export async function CreateEmployeeService({
     `INSERT INTO employees(firstname, lastname, salary, hiredate, department) VALUES('${firstname}', '${lastname}', ${salary}, '${hiredate}', '${department}')`,
   );
 }
+
+export async function GetAllEmployeeService(){
+  const employees = await pool.query('SELECT * FROM employees');
+  
+  return employees?.rows; 
+}
