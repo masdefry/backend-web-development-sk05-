@@ -8,6 +8,10 @@ interface CreateEmployeeInput {
   department: string;
 }
 
+interface UpdateEmployeeInput extends CreateEmployeeInput {
+  id: number;
+}
+
 export async function CreateEmployeeService({
   firstname,
   lastname,
@@ -20,8 +24,21 @@ export async function CreateEmployeeService({
   );
 }
 
-export async function GetAllEmployeeService(){
+export async function GetAllEmployeeService() {
   const employees = await pool.query('SELECT * FROM employees');
-  
-  return employees?.rows; 
+
+  return employees?.rows;
+}
+
+export async function UpdateEmployeeService({
+  firstname,
+  lastname,
+  salary,
+  hiredate,
+  department,
+  id,
+}: UpdateEmployeeInput) {
+  await pool.query(
+    `UPDATE employees SET firstname='${firstname}', lastname='${lastname}', salary=${salary}, hiredate='${hiredate}', department='${department}' WHERE id = ${id}`,
+  );
 }
