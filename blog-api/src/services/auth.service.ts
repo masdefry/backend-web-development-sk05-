@@ -7,11 +7,11 @@ export async function AuthRegisterService({
 }: UserCreateInput) {
   const findUser = await prisma.user.findUnique({
     where: {
-      email
-    }
-  }); 
+      email,
+    },
+  });
 
-  if(findUser) throw new Error('Email already registered');
+  if (findUser) throw new Error('Email already registered');
 
   return await prisma.user.create({
     data: {
@@ -21,4 +21,15 @@ export async function AuthRegisterService({
   });
 }
 
-export async function AuthLoginService(){}
+export async function AuthLoginService({ email, password }: UserCreateInput) {
+  const findUser = await prisma.user.findFirst({
+    where: {
+      email,
+      password,
+    },
+  });
+
+  if(!findUser) throw new Error('Email or password does not match'); 
+
+  return findUser; 
+}
