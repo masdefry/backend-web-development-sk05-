@@ -1,5 +1,10 @@
 import { prisma } from '../connection/prisma.connection';
-import { UserCreateInput } from '../generated/prisma/models';
+import { UserCreateInput, UserUpdateInput } from '../generated/prisma/models';
+
+interface AuthLoginInput {
+  email: string;
+  password: string;
+}
 
 export async function AuthRegisterService({
   email,
@@ -21,15 +26,15 @@ export async function AuthRegisterService({
   });
 }
 
-export async function AuthLoginService({ email, password }: UserCreateInput) {
-  const findUser = await prisma.user.findFirst({
+export async function AuthLoginService({ email, password }: AuthLoginInput) {
+  const findUser = await prisma.user.findUnique({
     where: {
       email,
       password,
     },
   });
 
-  if(!findUser) throw new Error('Email or password does not match'); 
+  if (!findUser) throw new Error('Email or password does not match');
 
-  return findUser; 
+  return findUser;
 }
