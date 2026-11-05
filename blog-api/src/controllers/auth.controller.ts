@@ -20,3 +20,5 @@ export async function AuthRegisterController(req: Request, res: Response) {
     });
   }
 }
+
+export async function AuthLoginController(req: Request, res: Response){}

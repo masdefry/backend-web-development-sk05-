@@ -20,3 +20,5 @@ export async function AuthRegisterService({
     },
   });
 }
+
+export async function AuthLoginService(){}
