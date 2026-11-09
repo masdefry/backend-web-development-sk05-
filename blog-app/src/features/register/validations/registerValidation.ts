@@ -7,3 +7,5 @@ export const registerValidation = z.object({
     .min(1, 'Password is required')
     .max(25, 'Password have maximum 25 characters'),
 });
+
+export type RegisterInput = z.infer<typeof registerValidation>; 
