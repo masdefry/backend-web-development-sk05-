@@ -4,9 +4,11 @@ import App from './App.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ReactQueryProvider from './providers/ReactQueryProvider.tsx';
 import RegisterPage from './pages/register/index.tsx';
+import { ToastContainer } from 'react-toastify';
 
 createRoot(document.getElementById('root')!).render(
   <ReactQueryProvider>
+    <ToastContainer />
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />

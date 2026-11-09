@@ -6,6 +6,7 @@ import {
 } from '../../features/register/validations/registerValidation';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function RegisterPage() {
   const {
@@ -16,7 +17,7 @@ export default function RegisterPage() {
     resolver: zodResolver(registerValidation),
   });
 
-  const { mutate } = useMutation({
+  const { mutate: registerMutation } = useMutation({
     mutationFn: async ({ email, password }: any) => {
       return await axios.post('http://localhost:8000/api/v1/auth/register', {
         email,
@@ -24,16 +25,16 @@ export default function RegisterPage() {
       });
     },
     onSuccess: (res) => {
-      console.log(res);
+      toast.success(res?.data?.message);
     },
-    onError: (err) => {
-      console.log(err);
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message); 
     },
   });
 
   return (
     <>
-      <form onSubmit={handleSubmit((data) => mutate(data))}>
+      <form onSubmit={handleSubmit((data) => registerMutation(data))}>
         <fieldset className='fieldset border-base-300 rounded-box w-xs border p-4'>
           <legend className='fieldset-legend'>Register</legend>
 
